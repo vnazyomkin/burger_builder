@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="71ffde4e-e79d-493d-8f05-e155c25b7935" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Burger/BuildControls/BuildControls.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Burger/BuildControls/BuildControls.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Burger/BuildControls/BuildControls.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Burger/BuildControls/BuildControls.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/containers/BurgerBuilder/BurgerBuilder.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/BurgerBuilder/BurgerBuilder.js" afterDir="false" />
     </list>
@@ -51,7 +52,8 @@
       <option name="presentableId" value="Default" />
       <updated>1574510962826</updated>
       <workItem from="1574510965731" duration="4144000" />
-      <workItem from="1574584786027" duration="15791000" />
+      <workItem from="1574584786027" duration="15978000" />
+      <workItem from="1574618424719" duration="2846000" />
     </task>
     <servers />
   </component>
@@ -63,7 +65,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
