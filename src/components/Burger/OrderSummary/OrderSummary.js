@@ -19,6 +19,7 @@ const orderSummary = (props) => {
             <ul>
                 {ingredientSummary}
             </ul>
+            <p><strong>Общая стоимость: {props.totalPrice} руб.</strong> </p>
             <p>Продолжить оформление заказа?</p>
             <Button
                 btnType='Success'
