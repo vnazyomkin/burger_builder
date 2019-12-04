@@ -2,6 +2,7 @@ import React from 'react';
 
 import Aux from '../../../hoc/Auxilliary';
 import dictRu from "../../../dictionary/ingredientsNames";
+import Button from '../../UI/Button/Button';
 
 const orderSummary = (props) => {
     console.log('sg');
@@ -19,6 +20,12 @@ const orderSummary = (props) => {
                 {ingredientSummary}
             </ul>
             <p>Продолжить оформление заказа?</p>
+            <Button
+                btnType='Success'
+                clicked={props.modalClose}>ОТМЕНА</Button>
+            <Button
+                btnType='Danger'
+                clicked={props.purchaseContinue}>ПРОДОЛЖИТЬ</Button>
         </Aux>
     );
 }
