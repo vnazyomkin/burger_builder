@@ -1,8 +1,10 @@
 import React from 'react';
+
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 import classes from './Burger.css';
 
 const burger = (props) => {
+    console.log(props);
     let transformIngredients = Object.keys(props.ingredients)
         .map(idKey => {
             return [...Array(props.ingredients[idKey])]

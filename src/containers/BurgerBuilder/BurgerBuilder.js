@@ -20,7 +20,7 @@ class BurgerBuilder extends Component {
     state = {
         ingredients: null,
         totalPrice: 100,
-        purchasable: false,
+        purchasable: true,
         purchasing: false,
         loading: false,
         error: false,
@@ -74,7 +74,7 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
-        // alert('Вы заказали');
+/*         // alert('Вы заказали');
         this.setState({loading: true,});
         const order = {
             ingredients: this.state.ingredients,
@@ -100,7 +100,16 @@ class BurgerBuilder extends Component {
             } )
             .catch( err => this.setState({ 
                 loading: false,
-                purchasing: false, }) );
+                purchasing: false, }) ); */
+        const queryParams = [];
+        for (let i in this.state.ingredients) {
+            queryParams.push(`${encodeURIComponent(i)}=${encodeURIComponent(this.state.ingredients[i])}`);
+        }
+
+        this.props.history.push({
+            pathname: '/order',
+            search: '?' + queryParams.join('&'),
+        });
 
     }
 
