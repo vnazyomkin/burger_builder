@@ -2,13 +2,8 @@ import React from 'react';
 
 import classes from './BuildControls.css';
 import BuildControl from './BuildControl/BuildControl';
+import controls from '../../UI/LOV/Controls';
 
-const controls = [
-    { label: 'Сатат', type: 'salad'},
-    { label: 'Бекон', type: 'bacon'},
-    { label: 'Сыр', type: 'cheese'},
-    { label: 'Мясо', type: 'meat'},
-];
 
 const buildControls = (props) => (
     <div className={classes.BuildControls}>
