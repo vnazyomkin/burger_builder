@@ -80,7 +80,7 @@ class BurgerBuilder extends Component {
         }
         queryParams.push('price=' + this.state.totalPrice);
         this.props.history.push({
-            pathname: '/order',
+            pathname: '/checkout',
             search: '?' + queryParams.join('&'),
         });
 
