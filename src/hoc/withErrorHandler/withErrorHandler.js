@@ -9,7 +9,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             error: null,
         }
 
-        componentWillMount () {
+        componentDidMount () {
             this.reqIntercenor = axios.interceptors.request.use( req => {
                 this.errorConfirmedHandler();
                 return req;
