@@ -9,11 +9,11 @@ import Input from '../../../components/UI/Input/Input';
 class ContactData extends Component {
     state = {
         orderForm: {
-            name: this.makeState('Ваше имя'),
-            street: this.makeState('Улица'),
-            zipCode: this.makeState('Индекс'),
-            country: this.makeState('Страна'),
-            email: this.makeState('Эл. почта', 'email'),
+            name: this.makeStateInput('Ваше имя'),
+            street: this.makeStateInput('Улица'),
+            zipCode: this.makeStateInput('Индекс'),
+            country: this.makeStateInput('Страна'),
+            email: this.makeStateInput('Эл. почта', 'email'),
             deliveryMethod: {
                 elementType: 'select',
                 elementConfig: {
@@ -27,7 +27,7 @@ class ContactData extends Component {
         loading: false,
     }
 
-    makeState(placeholder, type='text', elType='input', value='') {
+    makeStateInput(placeholder, type='text', elType='input', value='') {
         return {
             elementType: elType,
             elementConfig: {
@@ -42,10 +42,17 @@ class ContactData extends Component {
         event.preventDefault();
 
         this.setState({loading: true,});
+        const formData = {};
+        for (let formElementIdentifier in this.state.orderForm) {
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+        }
+
+
         const order = {
+            date: new Date(),
             ingredients: this.props.ingredients,
             price: this.props.totalPrice,
-            date: new Date(),
+            orderData: formData,
         };
         axios.post('/orders.json', order)
             .then( resp => {
@@ -61,6 +68,16 @@ class ContactData extends Component {
   
     }
 
+    inputChangedHandler = ( (event, inputIdentifier) => {
+        const updatedOrderForm = {...this.state.orderForm};
+
+        const updatedElementForm = {...updatedOrderForm[inputIdentifier]};
+        updatedElementForm.value = event.target.value;
+        updatedOrderForm[inputIdentifier] = updatedElementForm;
+        
+        this.setState({orderForm: updatedOrderForm});
+    });
+
     render() {
         const formElementsArray = [];
         for (let key in this.state.orderForm) {
@@ -71,15 +88,16 @@ class ContactData extends Component {
             });
         }
         let form = (
-            <form>
+            <form onSubmit={this.orderHandler}>
                 {formElementsArray.map(formElement=>(
                     <Input 
                         key={formElement.id}
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
-                        value={formElement.config.value} />
+                        value={formElement.config.value}
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
-                <Button btnType="Success" clicked={this.orderHandler}>Заказать</Button>
+                <Button btnType="Success">Заказать</Button>
             </form>
         );
         if (this.state.loading) form = <Spinner/>;
