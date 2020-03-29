@@ -11,7 +11,20 @@ class ContactData extends Component {
         orderForm: {
             name: this.makeStateInput('Ваше имя'),
             street: this.makeStateInput('Улица'),
-            zipCode: this.makeStateInput('Индекс'),
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Индекс',
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5,
+                },
+                valid: false,
+            },
             country: this.makeStateInput('Страна'),
             email: this.makeStateInput('Эл. почта', 'email'),
             deliveryMethod: {
@@ -35,6 +48,10 @@ class ContactData extends Component {
                 placeholder: placeholder,
             },
             value: value,
+            validation: {
+                required: true,
+            },
+            valid: false,
         };
     }
 
@@ -68,11 +85,30 @@ class ContactData extends Component {
   
     }
 
+    checkValidity(value, rules) {
+        let isValid = true;
+        if (rules.required) {
+            isValid = value.trim() !== "" && isValid;
+        }
+
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid;
+        }
+
+        if (rules.maxLength) {
+            isValid = value.length <= rules.maxLength && isValid;
+        }
+
+        return isValid;
+    }
+
     inputChangedHandler = ( (event, inputIdentifier) => {
         const updatedOrderForm = {...this.state.orderForm};
 
         const updatedElementForm = {...updatedOrderForm[inputIdentifier]};
         updatedElementForm.value = event.target.value;
+        updatedElementForm.valid = this.checkValidity(updatedElementForm.value, updatedElementForm.validation);
+        console.log(updatedElementForm.valid);
         updatedOrderForm[inputIdentifier] = updatedElementForm;
         
         this.setState({orderForm: updatedOrderForm});
