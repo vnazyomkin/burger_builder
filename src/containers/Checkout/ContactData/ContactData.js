@@ -24,6 +24,7 @@ class ContactData extends Component {
                     maxLength: 5,
                 },
                 valid: false,
+                touched: false,
             },
             country: this.makeStateInput('Страна'),
             email: this.makeStateInput('Эл. почта', 'email'),
@@ -34,9 +35,13 @@ class ContactData extends Component {
                         {value: 'fastest', displayValue: 'Экспресс'},
                         {value: 'cheapest', displayValue: 'Самая дешёвая'},
                     ],
-                }
+                },
+                value: 'fastest',
+                validation:{},
+                valid: true,                
             }
         },
+        formIsValid: false,
         loading: false,
     }
 
@@ -52,6 +57,7 @@ class ContactData extends Component {
                 required: true,
             },
             valid: false,
+            touched: false,
         };
     }
 
@@ -108,10 +114,16 @@ class ContactData extends Component {
         const updatedElementForm = {...updatedOrderForm[inputIdentifier]};
         updatedElementForm.value = event.target.value;
         updatedElementForm.valid = this.checkValidity(updatedElementForm.value, updatedElementForm.validation);
+        updatedElementForm.touched = true;
         console.log(updatedElementForm.valid);
         updatedOrderForm[inputIdentifier] = updatedElementForm;
         
-        this.setState({orderForm: updatedOrderForm});
+        let formIsValid = true;
+        for (let inputIdentifier in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+        }
+
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     });
 
     render() {
@@ -131,9 +143,12 @@ class ContactData extends Component {
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
+                        invalid={!formElement.config.valid}
+                        shouldValidate={formElement.config.validation}
+                        touched={formElement.config.touched}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
-                <Button btnType="Success">Заказать</Button>
+                <Button btnType="Success" disabled={!this.state.formIsValid}>Заказать</Button>
             </form>
         );
         if (this.state.loading) form = <Spinner/>;
