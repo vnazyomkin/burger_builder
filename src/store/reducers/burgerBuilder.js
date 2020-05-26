@@ -34,6 +34,10 @@ const burgerBuilder = (state=initinalState, action) => {
                 totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
             };
         case actionTypes.SET_INGREDIENTS:
+            let totalPrice = 0;
+            for (let ing in action.ingredients) {
+                totalPrice += INGREDIENT_PRICES[ing]*action.ingredients[ing];
+            }
             return {
                 ...state,
                 ingredients: {
@@ -42,6 +46,7 @@ const burgerBuilder = (state=initinalState, action) => {
                     cheese: action.ingredients.cheese,
                     meat: action.ingredients.meat,
                 },
+                totalPrice: totalPrice,
                 error: false,
             };
         case actionTypes.FETCH_INGREDIENTS_FAILED:
