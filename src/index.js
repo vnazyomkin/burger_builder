@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {createStore} from 'redux'
-import burgerBuilder from './store/reducers/burgerBuilder';
+import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import {Provider} from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-let store = createStore(burgerBuilder, composeWithDevTools());
+let store = createStore(burgerBuilderReducer, composeWithDevTools());
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 registerServiceWorker();
