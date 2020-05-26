@@ -1,3 +1,5 @@
+import {  } from 'redux';
+
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-orders';
 
@@ -33,5 +35,11 @@ export const purchaseBurger = (orderData) => {
             .catch( err => {
                 dispatch(purchaseBurgerFail(err));
             } );
+    };
+};
+
+export const purchaseInit = () => {
+    return {
+        type: actionTypes.PURCHASE_INIT,
     };
 };
