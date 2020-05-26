@@ -16,18 +16,13 @@ class BurgerBuilder extends Component {
         purchasable: true,
         purchasing: false,
         loading: false,
-        error: false,
     }
 
     componentDidMount () {
-        axios.get('/ingredients.json')
-            .then(resp => {
-                this.setState( {ingredients: resp.data} )
-            })
-            .catch(err => {
-                this.setState( {error: true} );
-            });
+        this.props.onInitIngredients();
     }
+
+
 
     updatePurchasableState = (ingredients) => {
         const sum = Object.keys(ingredients).reduce((sum, item) => sum + ingredients[item], 0);
@@ -54,7 +49,7 @@ class BurgerBuilder extends Component {
 
         let orderSummary = null; 
 
-        let burger = this.state.error ? <p>Невозможно загрузить ингредиенты!</p> : <Spinner/>;
+        let burger = this.props.error ? <p>Невозможно загрузить ингредиенты!</p> : <Spinner/>;
 
         if (this.props.ings ) {        
             burger = (
@@ -100,6 +95,7 @@ const mapStateToProps = state => {
     return {
         ings: state.ingredients,
         price: state.totalPrice,
+        error: state.error,
     };
 };
 
@@ -107,6 +103,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
         onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients()),
     }
 }
 
