@@ -20,9 +20,10 @@ class Orders extends Component {
         if (!this.props.loading) {
             orders = (
                 <div>
-                {this.props.orders.reverse().map(order => (
-                    <Order {...order}/>
-                ))}
+                {this.props.orders.reverse().map(order => {
+                    console.log(order);
+                    return <Order {...order} />;
+                })}
             </div>
             );
         }
