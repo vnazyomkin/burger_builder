@@ -11,7 +11,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 class Orders extends Component {
    
     componentDidMount () {
-        console.log('[onFetchOrders]');
         this.props.onFetchOrders();
     }
 
@@ -22,11 +21,10 @@ class Orders extends Component {
             orders = (
                 <div>
                 {this.props.orders.reverse().map(order => {
-                    console.log(order);
                     return <Order 
                                 key={order.key}
                                 ingredients={order.ingredients}
-                                price={order.price} />;
+                                price={order.price} />
                 })}
             </div>
             );

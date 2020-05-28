@@ -25,7 +25,6 @@ const order = (props) => {
         <div className={classes.Order}>
             <p>Ингредиены: {ingredientsOutput}</p>
             <p>Цена: <strong>{props.price + 'руб.'}</strong></p>
-            <p>Дата: {props.date}</p>
         </div>
     );
 };

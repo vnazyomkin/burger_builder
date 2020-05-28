@@ -46,16 +46,12 @@ export const purchaseInit = () => {
 
 export const fetchOrders = () => {
     return dispatch => {
-        console.log('[fetchOrders]');
         dispatch(fetchOrderStart());
         axios.get('./orders.json')
         .then(res => {
-            console.log('resp: ');
-            console.log(res.data);
             const orders = [];
 
             for (let item in res.data) {
-                console.log('item ' + item);
                 orders.push({
                         ...res.data[item],
                         key: item
