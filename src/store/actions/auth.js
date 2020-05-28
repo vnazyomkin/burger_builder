@@ -7,10 +7,11 @@ export const authStart = () => {
     };
 };
 
-export const authSuccess = (authData) => {
+export const authSuccess = (idToken, userId) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        authData: authData,
+        idToken: idToken,
+        userId: userId,
     };
 };
 
@@ -20,6 +21,21 @@ export const authFail = (err) => {
         error: err,
     };
 };
+
+export const logout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT,
+    };
+};
+
+export const checkAuthTimeout = (expirationTime) => {
+    return dispatch => {
+            setTimeout(() => {
+                dispatch(logout());
+        }, expirationTime * 1000 );
+    }   
+};
+
 
 export const auth = (email, password, isSignUp) => {
     return (dispatch) => {
@@ -35,13 +51,14 @@ export const auth = (email, password, isSignUp) => {
         }
         axios.post(url, authData)
         .then(resp => {
-            console.log(resp.data);
-            dispatch(authSuccess(resp));
+            dispatch(authSuccess(resp.data.idToken, resp.data.expiresIn));
+            console.log(resp.data.expiresIn);
+            dispatch(checkAuthTimeout(resp.data.expiresIn));
 
         })
         .catch(err => {
             console.log(err);
-            dispatch(authFail(err));
+            dispatch(authFail(err.response.data.error));
         });
     };
 }

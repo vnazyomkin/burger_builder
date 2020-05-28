@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import getErrorMessage from '../../components/UI/LOV/errorMessage';
 import classes from './Auth.css';
 import * as actions from '../../store/actions/index';
 
@@ -97,7 +99,7 @@ class Auth extends Component {
             });
         }
 
-        const form = formElementsArray.map( formElement => (
+        let form = formElementsArray.map( formElement => (
             <Input 
                 key={formElement.id}
                 elementType={formElement.config.elementType}
@@ -108,24 +110,34 @@ class Auth extends Component {
                 touched={formElement.config.touched}
                 changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
         ) );
+        
+        if (this.props.loading) {
+            form = <Spinner/>
+        }
+
+    let errorMessage = this.props.error ? <p>{getErrorMessage(this.props.error.message)}</p> : null;
 
         return (
             <div className={classes.Auth}>
+                {errorMessage}
                 <h2 className={classes.Header}>{!this.state.isSignUp ? 'ВХОД' : 'РЕГИСТРАЦИЯ'}</h2>
                 <form onSubmit={this.submitHandler}>
                     {form}
                     <Button btnType="Success">ПОДТВЕРДИТЬ</Button>
                 </form>
-        <Button 
-            clicked={this.switchAuthModeHandler}
-            btnType="Danger">ПЕРЕКЛЮЧИТЬСЯ НА {this.state.isSignUp ? 'ВХОД' : 'РЕГИСТРАЦИЮ'}</Button>
+                <Button 
+                    clicked={this.switchAuthModeHandler}
+                    btnType="Danger">ПЕРЕКЛЮЧИТЬСЯ НА {this.state.isSignUp ? 'ВХОД' : 'РЕГИСТРАЦИЮ'}</Button>
             </div>
         );
     }
 }
 
 const mapStateToProps = state => {
-    return {};
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error,
+    };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -134,4 +146,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
