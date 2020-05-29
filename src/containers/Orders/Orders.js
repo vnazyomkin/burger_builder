@@ -11,12 +11,12 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 class Orders extends Component {
    
     componentDidMount () {
-        this.props.onFetchOrders();
+        this.props.onFetchOrders(this.props.token);
     }
 
     render() {
         let orders = <Spinner />;
-    if (this.props.error) return <p>Ошибка</p>
+    if (this.props.error) return <p>{this.props.error.response.data.error}</p>
         if (!this.props.loading) {
             orders = (
                 <div>
@@ -40,12 +40,13 @@ const mapStateToProps = state => {
         orders: state.order.orders,
         loading: state.order.loading,
         error: state.order.error,
+        token: state.auth.token,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: () => dispatch(actions.fetchOrders()),
+        onFetchOrders: (token) => dispatch(actions.fetchOrders(token)),
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
