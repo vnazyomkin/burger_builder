@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+
 export const authStart = () => {
     return {
         type: actionTypes.AUTH_START,
@@ -62,3 +63,10 @@ export const auth = (email, password, isSignUp) => {
         });
     };
 }
+
+export const setAuthRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_AUTH_REDIRECT_PATH,
+        path: path,
+    };
+};
