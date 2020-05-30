@@ -21,10 +21,15 @@ const order = (props) => {
             }} 
             key={el.name}>{el.name} ({el.amount})</span>
     });
+
     return (
         <div className={classes.Order}>
             <p>Ингредиены: {ingredientsOutput}</p>
             <p>Цена: <strong>{props.price + 'руб.'}</strong></p>
+            <p>Дата заказа: 
+                <strong>
+                 {' ' + new Date(props.date).toLocaleString()}
+                </strong></p>
         </div>
     );
 };

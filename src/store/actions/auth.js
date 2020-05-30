@@ -60,12 +60,10 @@ export const auth = (email, password, isSignUp) => {
             localStorage.setItem('expirationDate', expirationDate);
             localStorage.setItem('userId', resp.data.localId);
             dispatch(authSuccess(resp.data.idToken, resp.data.localId));
-            console.log(resp.data.expiresIn);
             dispatch(checkAuthTimeout(resp.data.expiresIn));
 
         })
         .catch(err => {
-            console.log(err);
             dispatch(authFail(err.response.data.error));
         });
     };

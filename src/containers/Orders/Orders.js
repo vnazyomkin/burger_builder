@@ -24,7 +24,8 @@ class Orders extends Component {
                     return <Order 
                                 key={order.key}
                                 ingredients={order.ingredients}
-                                price={order.price} />
+                                price={order.price} 
+                                date={order.date}/>
                 })}
             </div>
             );
