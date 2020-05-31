@@ -1,8 +1,8 @@
 const controls = [
-    { label: 'Сатат', type: 'salad'},
+    { label: 'Салат', type: 'salad'},
     { label: 'Бекон', type: 'bacon'},
     { label: 'Сыр', type: 'cheese'},
-    { label: 'Мясо', type: 'meat'},
+    { label: 'Сейтан', type: 'meat'},
 ];
 
 export default controls;
